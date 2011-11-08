@@ -18,18 +18,23 @@ public class ExpraBlockListener extends BlockListener {
 		Block block = event.getBlock();
 		Integer amount = 1;
 		Integer ratio = 20;
-		if (			block.getType() == Material.SEEDS ||
-						block.getType() == Material.CROPS ||
-						block.getType() == Material.MELON_SEEDS ||
-						block.getType() == Material.SAPLING) {
-			ratio = 3;
-		} else if (	block.getType() == Material.CAKE ||
-						block.getType() == Material.CAKE_BLOCK) {
-			ratio = 1; amount = 10;
-		} else if (	block.getType() == Material.SUGAR_CANE ||
-						block.getType() == Material.SUGAR_CANE_BLOCK ||
-						block.getType() == Material.CACTUS) {
-			ratio = 6;
+		switch (block.getType()) {
+			case Material.SEEDS :
+			case Material.CROPS :
+			case Material.MELON_SEEDS :
+			case Material.SAPLING :
+				ratio = 3;
+				break;
+			case Material.CAKE :
+			case Material.CAKE_BLOCK :
+				ratio = 1;
+				amount = 10;
+				break;
+			case Material.SUGAR_CANE_BLOCK :
+			case Material.CACTUS :
+				ratio = 6;
+				break;
+			default: break;
 		}
 		if (Expra.rando.nextInt(ratio)==0) {
 			ExperienceOrb xp = world.spawn(player.getLocation(), ExperienceOrb.class);
@@ -44,25 +49,30 @@ public class ExpraBlockListener extends BlockListener {
 		Block block = event.getBlock();
 		Integer amount = 1;
 		Integer ratio = 20;
-		if (			block.getType() == Material.DIAMOND_ORE ||
-						block.getType() == Material.LAPIS_ORE ||
-						block.getType() == Material.OBSIDIAN) {
-			ratio = 1;
-			amount = 3;
-		} else if (	block.getType() == Material.GOLD_ORE ||
-						block.getType() == Material.IRON_ORE) {
-			ratio = 2;
-			amount = 2;
-		} else if (	block.getType() == Material.COAL_ORE ||
-						block.getType() == Material.MELON) {
-			ratio = 3;
-			amount = 1;
-		} else if (	block.getType() == Material.SUGAR_CANE ||
-						block.getType() == Material.SUGAR_CANE_BLOCK) {
-			ratio = 40;
-		} else if (	block.getType() == Material.MOB_SPAWNER) {
-			ratio = 1;
-			amount = 10;
+		switch (block.getType()) {
+			case Material.DIAMOND_ORE :
+			case Material.LAPIS_ORE :
+			case Material.OBSIDIAN :
+				ratio = 1;
+				amount = 3;
+				break;
+			case Material.GOLD_ORE :
+			case Material.IRON_ORE :
+				ratio = 2;
+				amount = 2;
+				break;
+			case Material.COAL_ORE :
+			case Material.MELON :
+				ratio = 3;
+				break;
+			case Material.SUGAR_CANE_BLOCK :
+				ratio = 40;
+				break;
+			case Material.MOB_SPAWNER :
+				ratio = 1;
+				amount = 10;
+				break;
+			default: break;
 		}
 		if (Expra.rando.nextInt(ratio)==0) {
 			ExperienceOrb xp = world.spawn(player.getLocation(), ExperienceOrb.class);
