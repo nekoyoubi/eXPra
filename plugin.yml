@@ -1,0 +1,8 @@
+name: eXPra
+main: me.Nekoyoubi.Expra.Expra
+version: 0.1
+commands:
+    expra:
+        description: 'Displays the player''s current experience.'
+        usage: /<command>
+        aliases: xp
