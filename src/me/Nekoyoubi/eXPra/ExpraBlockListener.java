@@ -1,6 +1,5 @@
 package me.Nekoyoubi.Expra;
 
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ExperienceOrb;
@@ -19,19 +18,19 @@ public class ExpraBlockListener extends BlockListener {
 		Integer amount = 1;
 		Integer ratio = 20;
 		switch (block.getType()) {
-			case Material.SEEDS :
-			case Material.CROPS :
-			case Material.MELON_SEEDS :
-			case Material.SAPLING :
+			case SEEDS :
+			case CROPS :
+			case MELON_SEEDS :
+			case SAPLING :
 				ratio = 3;
 				break;
-			case Material.CAKE :
-			case Material.CAKE_BLOCK :
+			case CAKE :
+			case CAKE_BLOCK :
 				ratio = 1;
 				amount = 10;
 				break;
-			case Material.SUGAR_CANE_BLOCK :
-			case Material.CACTUS :
+			case SUGAR_CANE_BLOCK :
+			case CACTUS :
 				ratio = 6;
 				break;
 			default: break;
@@ -50,25 +49,25 @@ public class ExpraBlockListener extends BlockListener {
 		Integer amount = 1;
 		Integer ratio = 20;
 		switch (block.getType()) {
-			case Material.DIAMOND_ORE :
-			case Material.LAPIS_ORE :
-			case Material.OBSIDIAN :
+			case DIAMOND_ORE :
+			case LAPIS_ORE :
+			case OBSIDIAN :
 				ratio = 1;
 				amount = 3;
 				break;
-			case Material.GOLD_ORE :
-			case Material.IRON_ORE :
+			case GOLD_ORE :
+			case IRON_ORE :
 				ratio = 2;
 				amount = 2;
 				break;
-			case Material.COAL_ORE :
-			case Material.MELON :
+			case COAL_ORE :
+			case MELON :
 				ratio = 3;
 				break;
-			case Material.SUGAR_CANE_BLOCK :
+			case SUGAR_CANE_BLOCK :
 				ratio = 40;
 				break;
-			case Material.MOB_SPAWNER :
+			case MOB_SPAWNER :
 				ratio = 1;
 				amount = 10;
 				break;

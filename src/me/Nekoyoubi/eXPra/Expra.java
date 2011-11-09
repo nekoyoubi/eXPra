@@ -39,7 +39,11 @@ public class Expra extends JavaPlugin {
     	Player player = (sender instanceof Player) ? (Player)sender : null;
     	if(command.getName().equalsIgnoreCase("expra") && player != null) {
     		if (args.length == 0) {
-	    		Nekoyoubi.sendMessage(player, "Current level: "+player.getLevel());
+				Integer level = player.getLevel();
+				Integer xp = player.getExperience();
+				Integer levelxp = level*10;
+	    		Nekoyoubi.sendMessage(player, "Level: &b"+level);
+	    		Nekoyoubi.sendMessage(player, "Progress: &a"+xp+"&f of &c"+levelxp+"&f (&6"+Math.round(((double)xp/(double)levelxp)*100)+"%&f)", true);
 	    		return true;
     		}
     	} //If this has happened the function will break and return true. if this hasn't happened the a value of false will be returned.

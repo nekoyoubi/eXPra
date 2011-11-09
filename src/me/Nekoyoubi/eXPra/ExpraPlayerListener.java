@@ -14,7 +14,7 @@ public class ExpraPlayerListener extends PlayerListener {
 		if (caught != null) {
 			Player player = event.getPlayer();
 			World world = player.getWorld();
-			if (Expra.rando.nextInt(5)==0) {
+			if (Expra.rando.nextInt(1)==0) {
 				ExperienceOrb xp = world.spawn(player.getLocation(), ExperienceOrb.class);
 				xp.setExperience(1);
 			}

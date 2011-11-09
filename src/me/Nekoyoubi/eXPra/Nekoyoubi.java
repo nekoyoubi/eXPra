@@ -10,7 +10,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 public class Nekoyoubi {
-    private static String chatStart = ChatColor.GOLD + "eXPra" + ChatColor.WHITE + ": ";
+    private static String chatStart = ChatColor.BLUE + "eXPra" + ChatColor.WHITE + ": ";
     
     public static void sendMessage(Player player, String message) {
         Nekoyoubi.sendMessage(player, message, false);
@@ -20,7 +20,7 @@ public class Nekoyoubi {
 			if (message.startsWith("<"))
 				message = message.substring(1);
 			else {
-				message = "        "+message;
+				message = "         "+message;
 			}
 		}
 		else {
