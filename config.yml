@@ -1,0 +1,55 @@
+# eXPra will not award any XP in worlds listed below. Other effects will remain, though.
+disabled-worlds:
+    - noxpforyou
+disabled-players:
+    - TehCheater
+# Default rates and experience award amounts.
+defaults:
+    # Amount and rate to give by default for placing blocks.
+    block-place: 1@20
+    # Amount and rate to give by default for breaking blocks.
+    block-break: 1@20
+    # Amount and rate to give by default for fishing.
+    fishing: 1@1
+    # Amount given for lighting areas (normal by default to avoid exploit, but the option is there if you choose to use it).
+    lighting: 1@20
+# The rates and amounts for specific blocks and actions.
+overrides:
+    block-place:
+    # crops
+    - 59=1@5
+    # melon
+    - 104=1@5
+    - 105=1@5
+    # saplings
+    - 6=1@5
+    # cake
+    - 92=10@1
+    # sugar cane
+    - 83=1@6
+    # cactus
+    - 81=1@6
+    block-break:
+    # tall grass
+    - 31=1@15
+    # diamond ore
+    - 56=3@1
+    # lapis ore
+    - 21=4@1
+    # obsidian
+    - 49=1@1
+    # iron ore
+    - 15=2@2
+    # gold ore
+    - 14=2@2
+    # redstone ore
+    - 73=2@2
+    - 74=2@2
+    # coal ore
+    - 16=1@3
+    # melon
+    - 103=1@3
+    # sugar cane
+    - 83=1@40
+    # mob spawner
+    - 52=10@1

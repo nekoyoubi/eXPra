@@ -10,13 +10,15 @@ import org.bukkit.event.player.PlayerListener;
 public class ExpraPlayerListener extends PlayerListener {
 	@Override
 	public void onPlayerFish(PlayerFishEvent event) {
+		Player player = event.getPlayer();
+		if (Expra.disabledPlayers.contains(player.getName())) return;
+		World world = player.getWorld();
+		if (Expra.disabledWorlds.contains(world.getName())) return;
 		Entity caught = event.getCaught();
 		if (caught != null) {
-			Player player = event.getPlayer();
-			World world = player.getWorld();
-			if (Expra.rando.nextInt(1)==0) {
+			if (Expra.rando.nextInt(Expra.defaultFishingRatio)==0) {
 				ExperienceOrb xp = world.spawn(player.getLocation(), ExperienceOrb.class);
-				xp.setExperience(1);
+				xp.setExperience(Expra.defaultFishingRatio);
 			}
 		}
 	}

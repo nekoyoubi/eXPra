@@ -13,29 +13,25 @@ public class ExpraBlockListener extends BlockListener {
 	@Override
 	public void onBlockPlace(BlockPlaceEvent event) {
 		Player player = event.getPlayer();
+		if (Expra.disabledPlayers.contains(player.getName())) return;
 		World world = player.getWorld();
+		if (Expra.disabledWorlds.contains(world.getName())) return;
 		Block block = event.getBlock();
 		Integer amount = 1;
 		Integer ratio = 20;
-		switch (block.getType()) {
-			case SEEDS :
-			case CROPS :
-			case MELON_SEEDS :
-			case SAPLING :
-				ratio = 3;
-				break;
-			case CAKE :
-			case CAKE_BLOCK :
-				ratio = 1;
-				amount = 10;
-				break;
-			case SUGAR_CANE_BLOCK :
-			case CACTUS :
-				ratio = 6;
-				break;
-			default: break;
+		String[] keys = new String[] {
+			String.valueOf(block.getTypeId())+":"+String.valueOf(block.getData()),
+			String.valueOf(block.getTypeId())
+		};
+		if (Expra.overridePlace.containsKey(keys[0])) {
+			amount = Integer.parseInt(Expra.overridePlace.get(keys[0]).split("@")[0]);
+			ratio = Integer.parseInt(Expra.overridePlace.get(keys[0]).split("@")[1]);
+		} else if (Expra.overridePlace.containsKey(keys[1])) {
+			amount = Integer.parseInt(Expra.overridePlace.get(keys[1]).split("@")[0]);
+			ratio = Integer.parseInt(Expra.overridePlace.get(keys[1]).split("@")[1]);		
 		}
-		if (Expra.rando.nextInt(ratio)==0) {
+		if (ratio == 0) return;
+		else if (Expra.rando.nextInt(ratio)==0) {
 			ExperienceOrb xp = world.spawn(player.getLocation(), ExperienceOrb.class);
 			xp.setExperience(amount);
 		}
@@ -44,38 +40,29 @@ public class ExpraBlockListener extends BlockListener {
 	@Override
 	public void onBlockBreak(BlockBreakEvent event) {
 		Player player = event.getPlayer();
+		if (Expra.disabledPlayers.contains(player.getName())) return;
 		World world = player.getWorld();
+		if (Expra.disabledWorlds.contains(world.getName())) return;
 		Block block = event.getBlock();
 		Integer amount = 1;
 		Integer ratio = 20;
-		switch (block.getType()) {
-			case DIAMOND_ORE :
-			case LAPIS_ORE :
-			case OBSIDIAN :
-				ratio = 1;
-				amount = 3;
-				break;
-			case GOLD_ORE :
-			case IRON_ORE :
-				ratio = 2;
-				amount = 2;
-				break;
-			case COAL_ORE :
-			case MELON :
-				ratio = 3;
-				break;
-			case SUGAR_CANE_BLOCK :
-				ratio = 40;
-				break;
-			case MOB_SPAWNER :
-				ratio = 1;
-				amount = 10;
-				break;
-			default: break;
+		String[] keys = new String[] {
+			String.valueOf(block.getTypeId())+":"+String.valueOf(block.getData()),
+			String.valueOf(block.getTypeId())
+		};
+		if (Expra.overrideBreak.containsKey(keys[0])) {
+			amount = Integer.parseInt(Expra.overrideBreak.get(keys[0]).split("@")[0]);
+			ratio = Integer.parseInt(Expra.overrideBreak.get(keys[0]).split("@")[1]);
+		} else if (Expra.overrideBreak.containsKey(keys[1])) {
+			amount = Integer.parseInt(Expra.overrideBreak.get(keys[1]).split("@")[0]);
+			ratio = Integer.parseInt(Expra.overrideBreak.get(keys[1]).split("@")[1]);		
 		}
-		if (Expra.rando.nextInt(ratio)==0) {
+		if (ratio == 0) return;
+		else if (Expra.rando.nextInt(ratio)==0) {
 			ExperienceOrb xp = world.spawn(player.getLocation(), ExperienceOrb.class);
 			xp.setExperience(amount);
 		}
 	}
+	
+	
 }
