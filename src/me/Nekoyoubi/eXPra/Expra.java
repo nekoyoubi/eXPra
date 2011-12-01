@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
@@ -37,7 +39,7 @@ public class Expra extends JavaPlugin {
 	public void onDisable() {
 		System.out.println(this + " is now disabled.");
 	}
-
+	
 	@Override
 	public void onEnable() {
 		loadConfiguration();
@@ -55,19 +57,54 @@ public class Expra extends JavaPlugin {
     	Player player = (sender instanceof Player) ? (Player)sender : null;
     	if(command.getName().equalsIgnoreCase("expra") && player != null) {
     		if (args.length == 0) {
-				Integer level = player.getLevel();
-				Integer xp = player.getExperience();
-				Integer levelxp = level*10;
-	    		Nekoyoubi.sendMessage(player, "Level: &b"+level);
-	    		Nekoyoubi.sendMessage(player, "Progress: &a"+xp+"&f of &c"+levelxp+"&f (&6"+Math.round(((double)xp/(double)levelxp)*100)+"%&f)", true);
+	    		Nekoyoubi.sendMessage(player, "Level: &b"+player.getLevel()+" &f(&6"+Math.round(player.getExp()*100f)+"%&f)");
 	    		return true;
+    		} else if (
+    				args[0].equalsIgnoreCase("adjust")||
+    				args[0].equalsIgnoreCase("adj")||
+    				args[0].equalsIgnoreCase("a")||
+    				args[0].equalsIgnoreCase("add")||
+    				args[0].equalsIgnoreCase("set")) {
+    			if (!Nekoyoubi.hasPermission(player, "expra.adjust")) {
+    				Nekoyoubi.sendMessage(player, "You do not have access to that command.");
+    				return true;
+    			}
+    			int levels = 1;
+    			Player target = player;
+    			if (args.length == 2) {
+	    			if (Pattern.matches("^-?\\d+$", args[1])) {
+	    				levels = Integer.parseInt(args[1]);
+	    			} else if (getServer().getPlayer(args[1]) != null) {
+	    				target = getServer().getPlayer(args[1]);
+	    			}
+    			} else if (args.length == 3) {
+	    			if (Pattern.matches("^-?\\d+$", args[1])) {
+	    				levels = Integer.parseInt(args[1]);
+	    				if (getServer().getPlayer(args[2]) != null) target = getServer().getPlayer(args[2]);
+	    			} else if (getServer().getPlayer(args[1]) != null) {
+	    				target = getServer().getPlayer(args[1]);
+	    				if (Pattern.matches("^-?\\d+$", args[2])) levels = Integer.parseInt(args[2]);
+	    			}
+    			}
+    			if (args[0].equalsIgnoreCase("set")) {
+    				target.setLevel(levels);
+    			} else {
+    				target.setLevel(levels+target.getLevel() < 0 ? 0 : levels+target.getLevel());
+    			}
+    			target.getWorld().spawn(target.getLocation(), ExperienceOrb.class).setExperience(-1);
+    			target.setExp(0);
+    			if (target == player) {
+		    		Nekoyoubi.sendMessage(player, "You adjusted your level to &b"+target.getLevel()+"&f.");	
+    			} else {
+		    		Nekoyoubi.sendMessage(player, "You set the level of &6"+target.getName()+" to &b"+target.getLevel()+"&f.");
+    			}
+    			return true;
     		}
-    	} //If this has happened the function will break and return true. if this hasn't happened the a value of false will be returned.
+    	}
     	return false;
 	}
 	
     public void loadConfiguration() {
-     	//reloadConfig();
     	getConfig().options().copyDefaults(true);
     	saveConfig();
     	List<String> overbreaks = null;

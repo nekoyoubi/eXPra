@@ -9,7 +9,17 @@ import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+import ru.tehkode.permissions.bukkit.PermissionsEx;
+
 public class Nekoyoubi {
+	
+	public static boolean hasPermission(Player player, String permission) { return hasPermission(player, permission, player.getWorld().getName()); }
+	public static boolean hasPermission(Player player, String permission, String world) {
+		if(player.getServer().getPluginManager().isPluginEnabled("PermissionsEx")){
+		    return PermissionsEx.getPermissionManager().has(player, permission, world);
+		} else { return true; }
+	}
+
     private static String chatStart = ChatColor.BLUE + "eXPra" + ChatColor.WHITE + ": ";
     
     public static void sendMessage(Player player, String message) {
