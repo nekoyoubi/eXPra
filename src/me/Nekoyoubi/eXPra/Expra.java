@@ -18,7 +18,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Expra extends JavaPlugin {
 
-	protected static boolean testing = true;
+	protected static boolean testing = false;
 	protected static Expra plugin;
 	
 	private ExpraBlockListener blockListener = new ExpraBlockListener();
@@ -29,7 +29,7 @@ public class Expra extends JavaPlugin {
 	protected static HashMap<String, String> overridePlace = new HashMap<String, String>();
 	
 	protected static HashMap<String, Location> playerLit = new HashMap<String, Location>();
-	protected static HashMap<String, Double> playerLevels = new HashMap<String, Double>();
+	protected static HashMap<String, Float> playerExperience = new HashMap<String, Float>();
 	
 	protected static List<String> disabledWorlds = new ArrayList<String>();
 	protected static List<String> disabledPlayers = new ArrayList<String>();
@@ -45,7 +45,10 @@ public class Expra extends JavaPlugin {
 	protected static Integer defaultFishingRatio = 1;
 	protected static Integer defaultLightingAmount = 1;
 	protected static Integer defaultLightingRatio = 10;
-	
+	protected static Integer defaultTamingAmount = 5;
+	protected static Integer defaultTamingRatio = 1;
+	protected static Integer defaultBreedingAmount = 3;
+	protected static Integer defaultBreedingRatio = 2;
 	
 	public static Random rando;
 	
@@ -63,9 +66,11 @@ public class Expra extends JavaPlugin {
         pm.registerEvent(Type.BLOCK_PLACE, blockListener, Priority.Low, this);
         pm.registerEvent(Type.BLOCK_BREAK, blockListener, Priority.Low, this);
         pm.registerEvent(Type.PLAYER_INTERACT, playerListener, Priority.Low, this);
+        //pm.registerEvent(Type.PLAYER_INTERACT_ENTITY, playerListener, Priority.Low, this);
         pm.registerEvent(Type.PLAYER_FISH, playerListener, Priority.Low, this);
-        pm.registerEvent(Type.ENTITY_DEATH, entityListener, Priority.High, this);
         pm.registerEvent(Type.PLAYER_RESPAWN, playerListener, Priority.High, this);
+        pm.registerEvent(Type.ENTITY_DEATH, entityListener, Priority.High, this);
+        pm.registerEvent(Type.ENTITY_TAME, entityListener, Priority.Low, this);
 		System.out.println(this + " is now enabled.");
 	}
 	
@@ -141,6 +146,8 @@ public class Expra extends JavaPlugin {
     	String defaultBreak = getConfig().getString("defaults.block-break", "1@20");
     	String defaultFishing = getConfig().getString("defaults.fishing", "1@1");
     	String defaultLighting = getConfig().getString("defaults.lighting", "1@20");
+    	String defaultTaming = getConfig().getString("defaults.taming", "5@1");
+    	String defaultBreeding = getConfig().getString("defaults.breeding", "5@1");
      	defaultBlockPlaceAmount = Integer.parseInt(defaultPlace.split("@")[0]);
     	defaultBlockPlaceRatio = Integer.parseInt(defaultPlace.split("@")[1]);
      	defaultBlockBreakAmount = Integer.parseInt(defaultBreak.split("@")[0]);
@@ -149,6 +156,10 @@ public class Expra extends JavaPlugin {
     	defaultFishingRatio = Integer.parseInt(defaultFishing.split("@")[1]);
      	defaultLightingAmount = Integer.parseInt(defaultLighting.split("@")[0]);
     	defaultLightingRatio = Integer.parseInt(defaultLighting.split("@")[1]);
+     	defaultTamingAmount = Integer.parseInt(defaultTaming.split("@")[0]);
+    	defaultTamingRatio = Integer.parseInt(defaultTaming.split("@")[1]);
+     	defaultBreedingAmount = Integer.parseInt(defaultBreeding.split("@")[0]);
+    	defaultBreedingRatio = Integer.parseInt(defaultBreeding.split("@")[1]);
    	
     	if (getConfig().contains("overrides.block-break")) {
     		overbreaks = Nekoyoubi.castList(String.class, getConfig().getList("overrides.block-break"));
@@ -158,6 +169,7 @@ public class Expra extends JavaPlugin {
 	    		overrideBreak.put(block, reward);
 			}
     	}
+    	
     	if (getConfig().contains("overrides.block-place")) {
     		overplaces = Nekoyoubi.castList(String.class, getConfig().getList("overrides.block-place"));
 	    	for (String overplace : overplaces) {
@@ -167,5 +179,4 @@ public class Expra extends JavaPlugin {
 			}
     	}
     }
-
 }

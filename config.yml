@@ -17,6 +17,8 @@ defaults:
     fishing: 1@1
     # Amount given for lighting areas.
     lighting: 1@10
+    # Amount given for taming wolves.
+    taming: 5@1
 # The rates and amounts for specific blocks and actions.
 overrides:
     block-place:

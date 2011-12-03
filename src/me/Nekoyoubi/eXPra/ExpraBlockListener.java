@@ -19,7 +19,7 @@ public class ExpraBlockListener extends BlockListener {
 		World world = player.getWorld();
 		if (Expra.disabledWorlds.contains(world.getName())) return;
 		Block block = event.getBlockPlaced();
-		if (Expra.defaultLightingAmount > 0) {
+		if (Expra.defaultLightingAmount > 0 && Nekoyoubi.hasPermission(player, "expra.award.explore")) {
 			byte newLight = block.getLightLevel();
 			byte oldLight = event.getBlockReplacedState().getLightLevel();
 			if (newLight > oldLight) {
@@ -35,6 +35,8 @@ public class ExpraBlockListener extends BlockListener {
 				}
 			}
 		}
+		
+		if (!Nekoyoubi.hasPermission(player, "expra.award.place")) return;
 		
 		Integer amount = Expra.defaultBlockPlaceAmount;
 		Integer ratio = Expra.defaultBlockPlaceRatio;
@@ -55,6 +57,7 @@ public class ExpraBlockListener extends BlockListener {
 	@Override
 	public void onBlockBreak(BlockBreakEvent event) {
 		Player player = event.getPlayer();
+		if (!Nekoyoubi.hasPermission(player, "expra.award.break")) return;
 		if (Expra.disabledPlayers.contains(player.getName())) return;
 		World world = player.getWorld();
 		if (Expra.disabledWorlds.contains(world.getName())) return;

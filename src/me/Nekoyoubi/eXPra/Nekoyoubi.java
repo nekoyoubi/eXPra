@@ -8,6 +8,7 @@ import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 
 import ru.tehkode.permissions.bukkit.PermissionsEx;
@@ -76,5 +77,35 @@ public class Nekoyoubi {
 	public static long ticksFromSeconds(int seconds) {
 		return seconds*20L;
 	}
+	public static long ticksFromMinutes(int minutes) {
+		return minutes*60*20L;
+	}
+	public static long ticksFromHours(int hours) {
+		return hours*60*60*20L;
+	}
 
+	public static int getExpToXP(int level, float exp) {
+		return (int)(7+Math.floor((double)level*3.5));
+	}
+	
+	public static int getExactXP(int level, float exp) {
+		int xp = 0;
+		for (int i = 0; i < level; i++) {
+			xp += (int)(7+Math.floor((double)i*3.5));
+		}
+		int xpToLevel = xp;//(int)((float)(3.5 * level) * (float)(level + 1));
+		int xpAtLevel = (int)(7+Math.floor((double)level*3.5));
+		int xpInExp = (int)((float)xpAtLevel * exp);
+		return xpToLevel+xpInExp;
+	}
+	public static Float levelExpCombo(Player player) {
+		return (float)player.getLevel()+player.getExp();
+	}
+	public static int getExactXP(Player player) {
+		return getExactXP(player.getLevel(), player.getExp());
+	}
+	public static void updateXPDisplay(Player player) {
+    	player.getWorld().spawn(player.getLocation(), ExperienceOrb.class).setExperience(1);						
+		player.getWorld().spawn(player.getLocation(), ExperienceOrb.class).setExperience(-1);
+	}
 }
