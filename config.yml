@@ -3,6 +3,10 @@ disabled-worlds:
     - noxpforyou
 disabled-players:
     - TehCheater
+# What percentage of levels should be lost upon player death?
+death-percent-loss: 100
+# Should we player death cause experience to drop at all?
+player-xp-drop: true
 # Default rates and experience award amounts.
 defaults:
     # Amount and rate to give by default for placing blocks.
@@ -12,7 +16,7 @@ defaults:
     # Amount and rate to give by default for fishing.
     fishing: 1@1
     # Amount given for lighting areas (normal by default to avoid exploit, but the option is there if you choose to use it).
-    lighting: 1@20
+    lighting: 1@10
 # The rates and amounts for specific blocks and actions.
 overrides:
     block-place:

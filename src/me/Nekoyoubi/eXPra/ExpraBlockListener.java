@@ -1,5 +1,7 @@
 package me.Nekoyoubi.Expra;
 
+
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ExperienceOrb;
@@ -16,7 +18,24 @@ public class ExpraBlockListener extends BlockListener {
 		if (Expra.disabledPlayers.contains(player.getName())) return;
 		World world = player.getWorld();
 		if (Expra.disabledWorlds.contains(world.getName())) return;
-		Block block = event.getBlock();
+		Block block = event.getBlockPlaced();
+		if (Expra.defaultLightingAmount > 0) {
+			byte newLight = block.getLightLevel();
+			byte oldLight = event.getBlockReplacedState().getLightLevel();
+			if (newLight > oldLight) {
+				float diff = ((float)oldLight / (float)newLight);
+				if (diff < .5f) {
+					boolean award = true;
+					if (Expra.playerLit.containsKey(player.getName()+":"+player.getWorld().getName())) {
+						Location lastLit = Expra.playerLit.get(player.getName()+":"+player.getWorld().getName());
+						if (lastLit.distance(block.getLocation()) < 5) award = false;
+					}
+					Expra.playerLit.put(player.getName()+":"+player.getWorld().getName(), block.getLocation());
+					if (award) processAward(player, Expra.defaultLightingRatio, Expra.defaultLightingAmount);
+				}
+			}
+		}
+		
 		Integer amount = 1;
 		Integer ratio = 20;
 		String[] keys = new String[] {
@@ -30,11 +49,7 @@ public class ExpraBlockListener extends BlockListener {
 			amount = Integer.parseInt(Expra.overridePlace.get(keys[1]).split("@")[0]);
 			ratio = Integer.parseInt(Expra.overridePlace.get(keys[1]).split("@")[1]);		
 		}
-		if (ratio == 0) return;
-		else if (Expra.rando.nextInt(ratio)==0) {
-			ExperienceOrb xp = world.spawn(player.getLocation(), ExperienceOrb.class);
-			xp.setExperience(amount);
-		}
+		processAward(player, ratio, amount);
 	}
 	
 	@Override
@@ -57,12 +72,14 @@ public class ExpraBlockListener extends BlockListener {
 			amount = Integer.parseInt(Expra.overrideBreak.get(keys[1]).split("@")[0]);
 			ratio = Integer.parseInt(Expra.overrideBreak.get(keys[1]).split("@")[1]);		
 		}
+		processAward(player, ratio, amount);
+	}
+	
+	public void processAward(Player player, Integer ratio, Integer amount) {
 		if (ratio == 0) return;
 		else if (Expra.rando.nextInt(ratio)==0) {
-			ExperienceOrb xp = world.spawn(player.getLocation(), ExperienceOrb.class);
+			ExperienceOrb xp = player.getWorld().spawn(player.getLocation(), ExperienceOrb.class);
 			xp.setExperience(amount);
 		}
 	}
-	
-	
 }

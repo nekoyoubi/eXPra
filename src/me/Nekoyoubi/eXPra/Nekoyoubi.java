@@ -22,6 +22,10 @@ public class Nekoyoubi {
 
     private static String chatStart = ChatColor.BLUE + "eXPra" + ChatColor.WHITE + ": ";
     
+	public static void testMessage(Player player, String message) {
+		if (Expra.testing) sendMessage(player, message);
+	}
+	
     public static void sendMessage(Player player, String message) {
         Nekoyoubi.sendMessage(player, message, false);
     }
@@ -62,6 +66,10 @@ public class Nekoyoubi {
 	    for(Object o: c)
 	      r.add(clazz.cast(o));
 	    return r;
+	}
+	
+	public static long ticksFromSeconds(int seconds) {
+		return seconds*20L;
 	}
 
 }
