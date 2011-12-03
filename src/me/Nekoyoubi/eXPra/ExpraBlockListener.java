@@ -36,8 +36,8 @@ public class ExpraBlockListener extends BlockListener {
 			}
 		}
 		
-		Integer amount = 1;
-		Integer ratio = 20;
+		Integer amount = Expra.defaultBlockPlaceAmount;
+		Integer ratio = Expra.defaultBlockPlaceRatio;
 		String[] keys = new String[] {
 			String.valueOf(block.getTypeId())+":"+String.valueOf(block.getData()),
 			String.valueOf(block.getTypeId())
@@ -59,8 +59,8 @@ public class ExpraBlockListener extends BlockListener {
 		World world = player.getWorld();
 		if (Expra.disabledWorlds.contains(world.getName())) return;
 		Block block = event.getBlock();
-		Integer amount = 1;
-		Integer ratio = 20;
+		Integer amount = Expra.defaultBlockBreakAmount;
+		Integer ratio = Expra.defaultBlockBreakRatio;
 		String[] keys = new String[] {
 			String.valueOf(block.getTypeId())+":"+String.valueOf(block.getData()),
 			String.valueOf(block.getTypeId())

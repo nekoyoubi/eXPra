@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -40,9 +41,13 @@ public class Nekoyoubi {
 		else {
 			message = chatStart+message;
 		}
-		player.sendMessage(message
-        	.replaceAll("(&([a-f0-9]))", "\u00A7$2")
-        	.replaceAll("%WORLD%", titleCase(player.getWorld().getName())));
+		if (player == null) {
+			Bukkit.broadcastMessage(message.replaceAll("(&([a-f0-9]))", "\u00A7$2"));
+		} else {
+			player.sendMessage(message
+	        	.replaceAll("(&([a-f0-9]))", "\u00A7$2")
+	        	.replaceAll("%WORLD%", titleCase(player.getWorld().getName())));
+		}
 	}
 	public static Player randomPlayerInWorld(World world) {
 		if (world.getPlayers().size() > 0) {

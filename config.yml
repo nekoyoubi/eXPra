@@ -15,7 +15,7 @@ defaults:
     block-break: 1@20
     # Amount and rate to give by default for fishing.
     fishing: 1@1
-    # Amount given for lighting areas (normal by default to avoid exploit, but the option is there if you choose to use it).
+    # Amount given for lighting areas.
     lighting: 1@10
 # The rates and amounts for specific blocks and actions.
 overrides:
