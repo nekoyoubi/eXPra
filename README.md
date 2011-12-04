@@ -36,22 +36,30 @@ Permissions
 -------------
 If you are using PermissionsEx, you can (need to) assign the following permissions to their respective groups and users.
 
-* `expra.adjust`
+* `expra.adjust`  
     This is for administrators and moderators only! Use with caution. Allows the user to set their own, and others' level.
-* `expra.award.*`
+
+* `expra.award.*`  
     This will allow the user to receive all addition XP rewards that eXPra offers.
-* `expra.award.break`
+
+* `expra.award.break`  
     Reward the user for breaking blocks as per the configuration file.
-* `expra.award.place`
+
+* `expra.award.place`  
     Reward the user for placing blocks as per the configuration file.
-* `expra.award.fish`
+
+* `expra.award.fish`  
     Reward the user for fishing as per the configuration file.
-* `expra.award.explore`
+
+* `expra.award.explore`  
     Reward the user for exploring (lighting) as per the configuration file.
-* `expra.award.tame`
+
+* `expra.award.tame`  
     Reward the user for taming wolves as per the configuration file.
-* `expra.death.noloss`
+
+* `expra.death.noloss`  
     This will allow the user to keep all XP upon death regardless of configuration.
-* `expra.death.loss`
+
+* `expra.death.loss`  
     This will allow the user to only lose a configurable amount of experience. _Without this or `expra.death.noloss`, the user will lose all levels and XP as per standard MC loss._
 
