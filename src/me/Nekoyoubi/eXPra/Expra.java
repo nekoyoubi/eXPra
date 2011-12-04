@@ -35,7 +35,8 @@ public class Expra extends JavaPlugin {
 	protected static List<String> disabledPlayers = new ArrayList<String>();
 	
 	protected static Integer deathPercentLoss = 0;
-	public static boolean playerXPDrop = true;
+	protected static boolean playerXPDrop = true;
+	protected static boolean usePermissions = false;;
 	
 	protected static Integer defaultBlockPlaceAmount = 1;
 	protected static Integer defaultBlockPlaceRatio = 20;
@@ -88,7 +89,7 @@ public class Expra extends JavaPlugin {
     				args[0].equalsIgnoreCase("add")||
     				args[0].equalsIgnoreCase("set")||
     				args[0].equalsIgnoreCase("s")) {
-    			if (!Nekoyoubi.hasPermission(player, "expra.adjust")) {
+    			if (!Nekoyoubi.hasPermission(player, "expra.adjust", true)) {
     				Nekoyoubi.sendMessage(player, "You do not have access to that command.");
     				return true;
     			}
@@ -141,7 +142,7 @@ public class Expra extends JavaPlugin {
     	}
 	   	deathPercentLoss = getConfig().getInt("death-percent-loss", 0);
 	   	playerXPDrop = getConfig().getBoolean("player-xp-drop", true);
-	   	
+	   	usePermissions = getConfig().getBoolean("use-permissions", false);
     	String defaultPlace = getConfig().getString("defaults.block-place", "1@20");
     	String defaultBreak = getConfig().getString("defaults.block-break", "1@20");
     	String defaultFishing = getConfig().getString("defaults.fishing", "1@1");
@@ -178,5 +179,7 @@ public class Expra extends JavaPlugin {
 	    		overridePlace.put(block, reward);
 			}
     	}
+    	
+    	Nekoyoubi.testMessage(null, "config loaded");
     }
 }

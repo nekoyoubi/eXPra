@@ -35,7 +35,6 @@ public class ExpraBlockListener extends BlockListener {
 				}
 			}
 		}
-		
 		if (!Nekoyoubi.hasPermission(player, "expra.award.place")) return;
 		
 		Integer amount = Expra.defaultBlockPlaceAmount;

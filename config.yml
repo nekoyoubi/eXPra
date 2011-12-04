@@ -1,3 +1,5 @@
+# Tells eXPra if you are using a permissions system.
+use-permissions: true
 # eXPra will not award any XP in worlds listed below. Other effects will remain, though.
 disabled-worlds:
     - noxpforyou

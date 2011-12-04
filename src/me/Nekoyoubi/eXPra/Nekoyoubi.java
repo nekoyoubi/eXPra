@@ -15,11 +15,23 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 public class Nekoyoubi {
 	
-	public static boolean hasPermission(Player player, String permission) { return hasPermission(player, permission, player.getWorld().getName()); }
-	public static boolean hasPermission(Player player, String permission, String world) {
-		if(player.getServer().getPluginManager().isPluginEnabled("PermissionsEx")){
-		    return PermissionsEx.getPermissionManager().has(player, permission, world);
-		} else { return true; }
+	public static boolean hasPermission(Player player, String permission) { return hasPermission(player, permission, false); }
+	public static boolean hasPermission(Player player, String permission, boolean opOnly) { return hasPermission(player, permission, opOnly, player.getWorld().getName()); }
+	public static boolean hasPermission(Player player, String permission, boolean opOnly, String world) {
+		if (Expra.usePermissions) {
+			if(Bukkit.getServer().getPluginManager().isPluginEnabled("PermissionsEx")) {
+				boolean inpex = PermissionsEx.getPermissionManager().has(player, permission, world);
+				return inpex;
+			} else {
+				boolean insuper = player.hasPermission(permission);
+				return insuper;
+			}
+		} else if (opOnly) {
+			if (player.hasPermission("op")) return true;
+			else return false;
+		} else {
+			return true;
+		}
 	}
 
     private static String chatStart = ChatColor.BLUE + "eXPra" + ChatColor.WHITE + ": ";
