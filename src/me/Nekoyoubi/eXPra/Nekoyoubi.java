@@ -62,6 +62,7 @@ public class Nekoyoubi {
 	        	.replaceAll("%WORLD%", titleCase(player.getWorld().getName())));
 		}
 	}
+	
 	public static Player randomPlayerInWorld(World world) {
 		if (world.getPlayers().size() > 0) {
 			return world.getPlayers().get(new Random().nextInt(world.getPlayers().size()));
@@ -86,15 +87,10 @@ public class Nekoyoubi {
 	    return r;
 	}
 	
-	public static long ticksFromSeconds(int seconds) {
-		return seconds*20L;
-	}
-	public static long ticksFromMinutes(int minutes) {
-		return minutes*60*20L;
-	}
-	public static long ticksFromHours(int hours) {
-		return hours*60*60*20L;
-	}
+	public static long ticksFromSeconds(int seconds) { return seconds*20L; }
+	public static long ticksFromMinutes(int minutes) { return minutes*60*20L; }
+	public static long ticksFromHours(int hours) { return hours*60*60*20L; }
+	public static long ticksFromdays(int days) { return days*24*60*60*20L; }
 
 	public static int getExpToXP(int level, float exp) {
 		return (int)(7+Math.floor((double)level*3.5));
@@ -120,4 +116,8 @@ public class Nekoyoubi {
     	player.getWorld().spawn(player.getLocation(), ExperienceOrb.class).setExperience(1);						
 		player.getWorld().spawn(player.getLocation(), ExperienceOrb.class).setExperience(-1);
 	}
+	
+	public static int getInt(String number, int def) { try { return Integer.parseInt(number); } catch (NumberFormatException e) { return def; } }
+	public static float getFloat(String number, float def) { try { return Float.parseFloat(number); } catch (NumberFormatException e) { return def; } }
+	
 }

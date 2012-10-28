@@ -1,6 +1,6 @@
 name: eXPra
 main: me.Nekoyoubi.Expra.Expra
-version: 0.5
+version: 0.6
 commands:
     expra:
         description: 'Displays the player''s current experience.'

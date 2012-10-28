@@ -4,13 +4,14 @@ import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityListener;
 import org.bukkit.event.entity.EntityTameEvent;
 
-public class ExpraEntityListener extends EntityListener {
+public class ExpraEntityListener implements Listener {
 	
-	@Override
+	@EventHandler
 	public void onEntityDeath(EntityDeathEvent event) {
 		Entity entity = event.getEntity();
 		if (entity instanceof Player) {
@@ -27,7 +28,7 @@ public class ExpraEntityListener extends EntityListener {
 		}
 	}
 	
-	@Override
+	@EventHandler
 	public void onEntityTame(EntityTameEvent event) {
 		Player player = (Player)event.getOwner();
 		if (!Nekoyoubi.hasPermission(player, "expra.award.tame")) return;

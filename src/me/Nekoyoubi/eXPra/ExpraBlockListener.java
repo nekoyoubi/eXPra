@@ -6,13 +6,14 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockListener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
-public class ExpraBlockListener extends BlockListener {
+public class ExpraBlockListener implements Listener {
 
-	@Override
+	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent event) {
 		Player player = event.getPlayer();
 		if (Expra.disabledPlayers.contains(player.getName())) return;
@@ -53,7 +54,7 @@ public class ExpraBlockListener extends BlockListener {
 		processAward(player, ratio, amount);
 	}
 	
-	@Override
+	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event) {
 		Player player = event.getPlayer();
 		if (!Nekoyoubi.hasPermission(player, "expra.award.break")) return;

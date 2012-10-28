@@ -11,8 +11,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event.Priority;
-import org.bukkit.event.Event.Type;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -64,14 +64,9 @@ public class Expra extends JavaPlugin {
 		plugin = this;
 		rando = new Random();
         PluginManager pm = getServer().getPluginManager();
-        pm.registerEvent(Type.BLOCK_PLACE, blockListener, Priority.Low, this);
-        pm.registerEvent(Type.BLOCK_BREAK, blockListener, Priority.Low, this);
-        pm.registerEvent(Type.PLAYER_INTERACT, playerListener, Priority.Low, this);
-        //pm.registerEvent(Type.PLAYER_INTERACT_ENTITY, playerListener, Priority.Low, this);
-        pm.registerEvent(Type.PLAYER_FISH, playerListener, Priority.Low, this);
-        pm.registerEvent(Type.PLAYER_RESPAWN, playerListener, Priority.High, this);
-        pm.registerEvent(Type.ENTITY_DEATH, entityListener, Priority.High, this);
-        pm.registerEvent(Type.ENTITY_TAME, entityListener, Priority.Low, this);
+        pm.registerEvents(this.playerListener, this);
+        pm.registerEvents(this.blockListener, this);
+        pm.registerEvents(this.entityListener, this);
 		System.out.println(this + " is now enabled.");
 	}
 	
@@ -82,6 +77,24 @@ public class Expra extends JavaPlugin {
     		if (args.length == 0) {
 	    		Nekoyoubi.sendMessage(player, "Level: &b"+player.getLevel()+" &f(&6"+Math.round(player.getExp()*100f)+"%&f)");
 	    		return true;
+    		} else if (args[0].equalsIgnoreCase("sell")) {
+    			if (!Nekoyoubi.hasPermission(player, "expra.sell", false)) {
+    				Nekoyoubi.sendMessage(player, "You do not have access to that command.");
+    				return true;
+    			} else {
+    				ItemStack item = player.getItemInHand();
+    				if (item == null) {
+    					Nekoyoubi.sendMessage(player, "You do not currently have an item selected.");
+    					return true;
+    				}
+    				PlayerInventory inv = player.getInventory();
+    				int amount = (args[1].equalsIgnoreCase("all") ? -1 : Nekoyoubi.getInt(args[1],1));
+    				ItemStack toRemove = new ItemStack(item.getType(), amount, item.getData().getData());
+    				if (amount == -1) {
+    					inv.removeItem(toRemove);
+    				}
+    				
+    			}
     		} else if (
     				args[0].equalsIgnoreCase("adjust")||
     				args[0].equalsIgnoreCase("adj")||
